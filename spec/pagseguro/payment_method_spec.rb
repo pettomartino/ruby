@@ -3,7 +3,7 @@ require "spec_helper"
 
 shared_examples_for "type mapping" do |id, type|
   it "returns #{type.inspect} as type when id is #{id}" do
-    expect(PagSeguro::PaymentMethod.new(type_id: id).type).to eql(type)
+    expect(PagSeguro::PaymentMethod.new(:type_id => id).type).to eql(type)
   end
 end
 
@@ -18,24 +18,24 @@ describe PagSeguro::PaymentMethod do
 
     it "raises for invalid id" do
       expect {
-        PagSeguro::PaymentMethod.new(type_id: "invalid").type
+        PagSeguro::PaymentMethod.new(:type_id => "invalid").type
       }.to raise_exception("PagSeguro::PaymentMethod#type_id isn't mapped")
     end
   end
 
   context "shortcuts" do
-    it { expect(PagSeguro::PaymentMethod.new(type_id: 1)).to be_credit_card }
-    it { expect(PagSeguro::PaymentMethod.new(type_id: 2)).to be_boleto }
-    it { expect(PagSeguro::PaymentMethod.new(type_id: 3)).to be_online_transfer }
-    it { expect(PagSeguro::PaymentMethod.new(type_id: 4)).to be_balance }
-    it { expect(PagSeguro::PaymentMethod.new(type_id: 5)).to be_oi_paggo }
-    it { expect(PagSeguro::PaymentMethod.new(type_id: 7)).to be_direct_deposit }
+    it { expect(PagSeguro::PaymentMethod.new(:type_id => 1)).to be_credit_card }
+    it { expect(PagSeguro::PaymentMethod.new(:type_id => 2)).to be_boleto }
+    it { expect(PagSeguro::PaymentMethod.new(:type_id => 3)).to be_online_transfer }
+    it { expect(PagSeguro::PaymentMethod.new(:type_id => 4)).to be_balance }
+    it { expect(PagSeguro::PaymentMethod.new(:type_id => 5)).to be_oi_paggo }
+    it { expect(PagSeguro::PaymentMethod.new(:type_id => 7)).to be_direct_deposit }
 
-    it { expect(PagSeguro::PaymentMethod.new(type_id: 5)).not_to be_credit_card }
+    it { expect(PagSeguro::PaymentMethod.new(:type_id => 5)).not_to be_credit_card }
   end
 
   context "description" do
-    subject(:payment_method) { PagSeguro::PaymentMethod.new(code: 102) }
+    subject(:payment_method) { PagSeguro::PaymentMethod.new(:code => 102) }
     it { expect(payment_method.description).to eql("Cartão de crédito MasterCard") }
   end
 end

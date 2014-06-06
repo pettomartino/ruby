@@ -57,9 +57,9 @@ module PagSeguro
   # Register endpoints by environment.
   def self.uris
     @uris ||= {
-      production: {
-        api: "https://ws.pagseguro.uol.com.br/v2",
-        site: "https://pagseguro.uol.com.br/v2"
+      :production => {
+        :api => "https://ws.pagseguro.uol.com.br/v2",
+        :site => "https://pagseguro.uol.com.br/v2"
       }
     }
   end

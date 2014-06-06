@@ -22,7 +22,7 @@ module PagSeguro
     end
 
     def error_message(code, message)
-      I18n.t(code, scope: "pagseguro.errors", default: message)
+      I18n.t(code, :scope => "pagseguro.errors", :default => message)
     end
   end
 end

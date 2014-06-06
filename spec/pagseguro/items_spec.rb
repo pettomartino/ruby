@@ -23,21 +23,21 @@ describe PagSeguro::Items do
   end
 
   it "sets item from Hash" do
-    item = PagSeguro::Item.new(id: 1234)
+    item = PagSeguro::Item.new(:id => 1234)
 
     PagSeguro::Item
       .should_receive(:new)
-      .with({id: 1234})
+      .with({:id => 1234})
       .and_return(item)
 
     items = PagSeguro::Items.new
-    items << {id: 1234}
+    items << {:id => 1234}
 
     expect(items).to include(item)
   end
 
   it "increases quantity when adding duplicated item" do
-    item = PagSeguro::Item.new(id: 1234)
+    item = PagSeguro::Item.new(:id => 1234)
     items = PagSeguro::Items.new
     items << item
     items << item
@@ -48,7 +48,7 @@ describe PagSeguro::Items do
 
   it "empties items" do
     items = PagSeguro::Items.new
-    items << {id: 1234}
+    items << {:id => 1234}
     items.clear
 
     expect(items).to be_empty

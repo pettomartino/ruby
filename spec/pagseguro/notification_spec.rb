@@ -5,7 +5,7 @@ describe PagSeguro::Notification do
   it_assigns_attribute :type
 
   it "detects notification as transaction" do
-    expect(PagSeguro::Notification.new(type: "transaction")).to be_transaction
+    expect(PagSeguro::Notification.new(:type => "transaction")).to be_transaction
   end
 
   it "fetches transaction by its notificationCode" do
@@ -13,6 +13,6 @@ describe PagSeguro::Notification do
       .should_receive(:find_by_notification_code)
       .with("CODE")
 
-    PagSeguro::Notification.new(code: "CODE").transaction
+    PagSeguro::Notification.new(:code => "CODE").transaction
   end
 end

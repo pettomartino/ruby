@@ -15,7 +15,7 @@ describe PagSeguro::Transaction do
 
     it "returns response with errors when request fails" do
       body = %[<?xml version="1.0"?><errors><error><code>1234</code><message>Sample error</message></error></errors>]
-      FakeWeb.register_uri :get, %r[.+], status: [400, "Bad Request"], body: body, content_type: "text/xml"
+      FakeWeb.register_uri :get, %r[.+], :status => [400, "Bad Request"], :body => body, :content_type => "text/xml"
       response = PagSeguro::Transaction.find_by_notification_code("invalid")
 
       expect(response).to be_a(PagSeguro::Transaction::Response)
@@ -26,14 +26,14 @@ describe PagSeguro::Transaction do
   describe ".find_by_date" do
     it "initializes report with default options" do
       now = Time.now
-      Time.stub now: now
+      Time.stub :now => now
 
       PagSeguro::Report
         .should_receive(:new)
         .with(
           PagSeguro::Transaction,
           "transactions",
-          hash_including(per_page: 50, starts_at: now - 86400, ends_at: now),
+          hash_including(:per_page => 50, :starts_at => now - 86400, :ends_at => now),
           0
         )
 
@@ -50,12 +50,12 @@ describe PagSeguro::Transaction do
         .with(
           PagSeguro::Transaction,
           "transactions",
-          hash_including(per_page: 10, starts_at: starts_at, ends_at: ends_at),
+          hash_including(:per_page => 10, :starts_at => starts_at, :ends_at => ends_at),
           page
         )
 
       PagSeguro::Transaction.find_by_date(
-        {per_page: 10, starts_at: starts_at, ends_at: ends_at},
+        {:per_page => 10, :starts_at => starts_at, :ends_at => ends_at},
         page
       )
     end
@@ -64,14 +64,14 @@ describe PagSeguro::Transaction do
   describe ".find_abandoned" do
     it "initializes report with default options" do
       now = Time.now
-      Time.stub now: now
+      Time.stub :now => now
 
       PagSeguro::Report
         .should_receive(:new)
         .with(
           PagSeguro::Transaction,
           "transactions/abandoned",
-          hash_including(per_page: 50, starts_at: now - 86400, ends_at: now - 900),
+          hash_including(:per_page => 50, :starts_at => now - 86400, :ends_at => now - 900),
           0
         )
 
@@ -88,12 +88,12 @@ describe PagSeguro::Transaction do
         .with(
           PagSeguro::Transaction,
           "transactions/abandoned",
-          hash_including(per_page: 10, starts_at: starts_at, ends_at: ends_at),
+          hash_including(:per_page => 10, :starts_at => starts_at, :ends_at => ends_at),
           page
         )
 
       PagSeguro::Transaction.find_abandoned(
-        {per_page: 10, starts_at: starts_at, ends_at: ends_at},
+        {:per_page => 10, :starts_at => starts_at, :ends_at => ends_at},
         page
       )
     end
@@ -102,7 +102,7 @@ describe PagSeguro::Transaction do
   describe "attributes" do
     before do
       body = File.read("./spec/fixtures/transactions/success.xml")
-      FakeWeb.register_uri :get, %r[.+], body: body, content_type: "text/xml"
+      FakeWeb.register_uri :get, %r[.+], :body => body, :content_type => "text/xml"
     end
 
     subject(:transaction) { PagSeguro::Transaction.find_by_notification_code("CODE") }

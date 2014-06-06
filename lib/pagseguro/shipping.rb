@@ -2,9 +2,9 @@ module PagSeguro
   class Shipping
     # Set the available shipping type.
     TYPE = {
-      pac: 1,
-      sedex: 2,
-      not_specified: 3
+      :pac => 1,
+      :sedex => 2,
+      :not_specified => 3
     }
 
     # Define the error class for invalid type assignment.

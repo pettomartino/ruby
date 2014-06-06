@@ -17,7 +17,7 @@ describe PagSeguro::PaymentRequest do
 
   it "sets the sender" do
     sender = PagSeguro::Sender.new
-    payment = PagSeguro::PaymentRequest.new(sender: sender)
+    payment = PagSeguro::PaymentRequest.new(:sender => sender)
 
     expect(payment.sender).to eql(sender)
   end
@@ -36,7 +36,7 @@ describe PagSeguro::PaymentRequest do
     before { PagSeguro.email = 'DEFAULT_EMAIL' }
 
     it "returns the email set in the constructor" do
-      expect(described_class.new(email: 'foo').email).to eq('foo')
+      expect(described_class.new(:email => 'foo').email).to eq('foo')
     end
 
     it "defaults to PagSeguro.email" do
@@ -48,7 +48,7 @@ describe PagSeguro::PaymentRequest do
     before { PagSeguro.token = 'DEFAULT_TOKEN' }
 
     it "returns the token set in the constructor" do
-      expect(described_class.new(token: 'foo').token).to eq('foo')
+      expect(described_class.new(:token => 'foo').token).to eq('foo')
     end
 
     it "defaults to PagSeguro.token" do
@@ -58,7 +58,7 @@ describe PagSeguro::PaymentRequest do
 
   describe "#register" do
     let(:payment) { PagSeguro::PaymentRequest.new }
-    before { FakeWeb.register_uri :any, %r[.*?], body: "" }
+    before { FakeWeb.register_uri :any, %r[.*?], :body => "" }
 
     it "serializes payment request" do
       PagSeguro::PaymentRequest::Serializer
@@ -73,11 +73,11 @@ describe PagSeguro::PaymentRequest do
       params = double
 
       params.should_receive(:merge).with({
-        email: PagSeguro.email,
-        token: PagSeguro.token
+        :email => PagSeguro.email,
+        :token => PagSeguro.token
       }).and_return(params)
 
-      PagSeguro::PaymentRequest::Serializer.any_instance.stub to_params: params
+      PagSeguro::PaymentRequest::Serializer.any_instance.stub :to_params => params
 
       PagSeguro::Request
         .should_receive(:post)
@@ -88,7 +88,7 @@ describe PagSeguro::PaymentRequest do
 
     it "initializes response" do
       response = double
-      PagSeguro::Request.stub post: response
+      PagSeguro::Request.stub :post => response
 
       PagSeguro::PaymentRequest::Response
         .should_receive(:new)
@@ -99,7 +99,7 @@ describe PagSeguro::PaymentRequest do
 
     it "returns response" do
       response = double
-      PagSeguro::PaymentRequest::Response.stub new: response
+      PagSeguro::PaymentRequest::Response.stub :new => response
 
       expect(payment.register).to eql(response)
     end

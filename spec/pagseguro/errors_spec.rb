@@ -15,7 +15,7 @@ describe PagSeguro::Errors do
     subject(:errors) { PagSeguro::Errors.new(response) }
 
     before do
-      response.stub unauthorized?: true, bad_request?: false
+      response.stub :unauthorized? => true, :bad_request? => false
     end
 
     it { should_not be_empty }
@@ -38,7 +38,7 @@ describe PagSeguro::Errors do
     subject(:errors) { PagSeguro::Errors.new(response) }
 
     before do
-      response.stub data: xml, unauthorized?: false, bad_request?: true
+      response.stub :data => xml, :unauthorized? => false, :bad_request? => true
     end
 
     it { expect(errors).to include("Sample message") }
@@ -60,7 +60,7 @@ describe PagSeguro::Errors do
     subject(:errors) { PagSeguro::Errors.new(response) }
 
     before do
-      response.stub data: xml, unauthorized?: false, bad_request?: true
+      response.stub :data => xml, :unauthorized? => false, :bad_request? => true
     end
 
     it { expect(errors).to include("O parâmetro email deve ser informado.") }
@@ -83,7 +83,7 @@ describe PagSeguro::Errors do
     subject(:errors) { PagSeguro::Errors.new(response) }
 
     before do
-      response.stub data: xml, unauthorized?: false, bad_request?: true
+      response.stub :data => xml, :unauthorized? => false, :bad_request? => true
     end
 
     it { expect(errors).to include("Malformed request XML: XML document structures must start and end within the same entity..") }

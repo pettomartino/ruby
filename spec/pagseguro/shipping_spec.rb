@@ -6,12 +6,12 @@ describe PagSeguro::Shipping do
 
   PagSeguro::Shipping::TYPE.each do |name, id|
     it "sets id for name (#{id.inspect} => #{name.inspect})" do
-      shipping = PagSeguro::Shipping.new(type_name: name)
+      shipping = PagSeguro::Shipping.new(:type_name => name)
       expect(shipping.type_id).to eql(id)
     end
 
     it "sets name for id (#{name.inspect} => #{id.inspect})" do
-      shipping = PagSeguro::Shipping.new(type_id: id)
+      shipping = PagSeguro::Shipping.new(:type_id => id)
       expect(shipping.type_name).to eql(name)
     end
   end

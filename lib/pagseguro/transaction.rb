@@ -87,9 +87,9 @@ module PagSeguro
     #
     def self.find_by_date(options = {}, page = 0)
       options = {
-        starts_at: Time.now - 86400,
-        ends_at: Time.now,
-        per_page: 50
+        :starts_at => Time.now - 86400,
+        :ends_at => Time.now,
+        :per_page => 50
       }.merge(options)
 
       Report.new(Transaction, "transactions", options, page)
@@ -107,9 +107,9 @@ module PagSeguro
     #
     def self.find_abandoned(options = {}, page = 0)
       options = {
-        starts_at: Time.now - 86400,
-        ends_at: Time.now - 900,
-        per_page: 50
+        :starts_at => Time.now - 86400,
+        :ends_at => Time.now - 900,
+        :per_page => 50
       }.merge(options)
 
       Report.new(Transaction, "transactions/abandoned", options, page)

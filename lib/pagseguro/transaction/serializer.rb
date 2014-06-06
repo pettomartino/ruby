@@ -29,8 +29,8 @@ module PagSeguro
         data[:cancellation_source] = cancellation_source.text if cancellation_source.any?
 
         data[:payment_method] = {
-          type_id: xml.css("paymentMethod > type").text,
-          code: xml.css("paymentMethod > code").text
+          :type_id => xml.css("paymentMethod > type").text,
+          :code => xml.css("paymentMethod > code").text
         }
       end
 
@@ -69,8 +69,8 @@ module PagSeguro
 
       def serialize_sender(data)
         sender = {
-          name: xml.css("sender > name").text,
-          email: xml.css("sender > email").text
+          :name => xml.css("sender > name").text,
+          :email => xml.css("sender > email").text
         }
 
         serialize_phone(sender)
@@ -79,15 +79,15 @@ module PagSeguro
 
       def serialize_phone(data)
         data[:phone] = {
-          area_code: xml.css("sender > phone > areaCode").text,
-          number: xml.css("sender > phone > number").text
+          :area_code => xml.css("sender > phone > areaCode").text,
+          :number => xml.css("sender > phone > number").text
         }
       end
 
       def serialize_shipping(data)
         shipping = {
-          type_id: xml.css("shipping > type").text,
-          cost: BigDecimal(xml.css("shipping > cost").text),
+          :type_id => xml.css("shipping > type").text,
+          :cost => BigDecimal(xml.css("shipping > cost").text),
         }
 
         serialize_address(shipping)
@@ -96,14 +96,14 @@ module PagSeguro
 
       def serialize_address(data)
         data[:address] = {
-          street: address_node.css("> street").text,
-          number: address_node.css("> number").text,
-          complement: address_node.css("> complement").text,
-          district: address_node.css("> district").text,
-          city: address_node.css("> city").text,
-          state: address_node.css("> state").text,
-          country: address_node.css("> country").text,
-          postal_code: address_node.css("> postalCode").text,
+          :street => address_node.css("> street").text,
+          :number => address_node.css("> number").text,
+          :complement => address_node.css("> complement").text,
+          :district => address_node.css("> district").text,
+          :city => address_node.css("> city").text,
+          :state => address_node.css("> state").text,
+          :country => address_node.css("> country").text,
+          :postal_code => address_node.css("> postalCode").text,
         }
       end
 

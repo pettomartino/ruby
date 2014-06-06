@@ -87,10 +87,10 @@ module PagSeguro
     private
     def perform_request_and_serialize
       @response = Request.get(@path, {
-        initialDate: options[:starts_at].xmlschema,
-        finalDate: options[:ends_at].xmlschema,
-        page: page,
-        maxPageResults: options.fetch(:per_page, 50)
+        :initialDate => options[:starts_at].xmlschema,
+        :finalDate => options[:ends_at].xmlschema,
+        :page => page,
+        :maxPageResults => options.fetch(:per_page, 50)
       })
 
       @errors = Errors.new(@response)

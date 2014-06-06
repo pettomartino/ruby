@@ -32,7 +32,7 @@ module PagSeguro
 
     # Return the payment method's description.
     def description
-      I18n.t(code, scope: "pagseguro.payment_methods")
+      I18n.t(code, :scope => "pagseguro.payment_methods")
     end
   end
 end

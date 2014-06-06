@@ -10,7 +10,7 @@ describe PagSeguro::Request do
 
   context "POST request" do
     before do
-      FakeWeb.register_uri :post, %r[.+], body: "BODY"
+      FakeWeb.register_uri :post, %r[.+], :body => "BODY"
     end
 
     it "includes credentials" do
@@ -24,7 +24,7 @@ describe PagSeguro::Request do
     it "includes custom credentials" do
       PagSeguro.email = "EMAIL"
       PagSeguro.token = "TOKEN"
-      PagSeguro::Request.post("checkout", email: 'foo', token: 'bar')
+      PagSeguro::Request.post("checkout", :email => 'foo', :token => 'bar')
 
       expect(FakeWeb.last_request.body).to include("email=foo&token=bar")
     end
@@ -47,7 +47,7 @@ describe PagSeguro::Request do
 
   context "GET request" do
     before do
-      FakeWeb.register_uri :get, %r[.+], body: "BODY"
+      FakeWeb.register_uri :get, %r[.+], :body => "BODY"
     end
 
     it "includes credentials" do
