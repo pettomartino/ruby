@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.require_paths         = ["lib"]
 
   spec.add_dependency "aitch", ">= 0.2.1"
-  spec.add_dependency "nokogiri", "1.4.4"
+  spec.add_dependency "nokogiri", '~> 1.6.0'
   spec.add_dependency "i18n"
   spec.add_dependency "json"
 
